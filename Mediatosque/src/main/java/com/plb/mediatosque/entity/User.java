@@ -1,6 +1,6 @@
 package com.plb.mediatosque.entity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class User {
 	private Long id;
@@ -8,19 +8,26 @@ public class User {
 	private String password;
 	private String lastName;
 	private String firstName;
-	
-	private List borrows; //A definir
+	private ArrayList<Truc> borrows = new ArrayList<>();
 
-	public User(Long id, String login, String password, String lastName, String firstName, List borrows) {
+	public User(Long id, String login, String password, String lastName, String firstName) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.borrows = borrows;
+		this.borrows = null;
 	}
-
+	
+	//emprunter un truc
+	
+	//rendre un truc
+	
+	//consulter la liste
+	
+	
+	//getter and setter
 	public Long getId() {
 		return id;
 	}
@@ -61,13 +68,14 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public List getBorrows() {
+	public ArrayList<Truc> getBorrows() {
 		return borrows;
 	}
 
-	public void setBorrows(List borrows) {
+	public void setBorrows(ArrayList<Truc> borrows) {
 		this.borrows = borrows;
 	}
 	
+
 	
 }
