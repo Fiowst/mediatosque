@@ -1,16 +1,23 @@
 package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "item")
 public class Item {
 	
@@ -30,6 +37,9 @@ public class Item {
 	
 	@Column(name = "author", nullable = false)
 	private String author;
+	
+	@ManyToMany(mappedBy = "items", cascade = CascadeType.REMOVE)
+	private Set<Borrow> borrow = new HashSet<Borrow>();
 	
 	public Item(Long id, String title, int quantity, LocalDate releaseDate, String author) {
 		super();
@@ -69,6 +79,5 @@ public class Item {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
 	
 }

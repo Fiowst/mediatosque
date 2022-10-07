@@ -1,12 +1,14 @@
 package com.plb.mediatosque.entity;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,8 +33,8 @@ public class User {
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
-	@Column(name = "borrows")
-	private ArrayList<Item> borrows = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private Set<Borrow> borrow = new HashSet<>();
 
 	public User(Long id, String login, String password, String lastName, String firstName) {
 		super();
@@ -41,7 +43,6 @@ public class User {
 		this.password = password;
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.borrows = null;
 	}
 	
 	//emprunter un truc
@@ -90,14 +91,6 @@ public class User {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-	}
-
-	public ArrayList<Item> getBorrows() {
-		return borrows;
-	}
-
-	public void setBorrows(ArrayList<Item> borrows) {
-		this.borrows = borrows;
 	}
 	
 }
