@@ -35,9 +35,8 @@ public class Borrow {
 	private User user;
 	
 	@ManyToMany
-    @JoinTable(name = "item_borrow",
-        joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "borrow_id", referencedColumnName = "id"))
+    //@JoinTable(name = "item_borrow", joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "borrow_id", referencedColumnName = "id"))
+	@JoinColumn(name="item_id")
     private Set<Item> items = new HashSet<>();
 	
 } 

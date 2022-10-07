@@ -23,7 +23,6 @@ public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@SequenceGenerator(name = "itemSequenceGenerator", allocationSize = 1)
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
