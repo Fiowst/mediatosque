@@ -8,7 +8,7 @@ public class User {
 	private String password;
 	private String lastName;
 	private String firstName;
-	private ArrayList<Truc> borrows = new ArrayList<>();
+	private ArrayList<Item> borrows = new ArrayList<>();
 
 	public User(Long id, String login, String password, String lastName, String firstName) {
 		super();
@@ -68,11 +68,11 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public ArrayList<Truc> getBorrows() {
+	public ArrayList<Item> getBorrows() {
 		return borrows;
 	}
 
-	public void setBorrows(ArrayList<Truc> borrows) {
+	public void setBorrows(ArrayList<Item> borrows) {
 		this.borrows = borrows;
 	}
 	

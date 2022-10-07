@@ -2,7 +2,7 @@ package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
 
-public class DVD extends Truc{
+public class DVD extends Item{
 	private Double duration;
 	private boolean type; //true = blueray, false = normal
 	

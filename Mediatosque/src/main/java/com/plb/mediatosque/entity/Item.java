@@ -2,14 +2,14 @@ package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
 
-public class Truc {
+public class Item {
 	private Long id;
 	private String title;
 	private int quantity;
 	private LocalDate releaseDate;
 	private String author;
 	
-	public Truc(Long id, String title, int quantity, LocalDate releaseDate, String author) {
+	public Item(Long id, String title, int quantity, LocalDate releaseDate, String author) {
 		super();
 		this.id = id;
 		this.title = title;
