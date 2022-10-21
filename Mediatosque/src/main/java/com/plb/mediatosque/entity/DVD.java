@@ -13,6 +13,8 @@ public class DVD extends Item{
 	@Enumerated(EnumType.STRING)
 	private DVDType type;
 	
+	public DVD() {}
+
 	public DVD(Long id, String title, int quantity, LocalDate releaseDate, String author, Double duration, DVDType type) {
 		super(id, title, quantity, releaseDate, author);
 		this.duration = duration;

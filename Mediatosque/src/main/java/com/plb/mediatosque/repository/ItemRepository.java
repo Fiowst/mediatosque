@@ -6,5 +6,6 @@ import com.plb.mediatosque.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 	
-
+	// Retrouver les items disponibles
+	
 }

@@ -11,7 +11,7 @@ import com.plb.mediatosque.entity.Item;
 import com.plb.mediatosque.service.ItemService;
 
 @RestController
-@RequestMapping("api/items")
+@RequestMapping("/api/items")
 public class ItemController {
 	
 	private final ItemService itemService;

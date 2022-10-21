@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +23,6 @@ public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
@@ -39,18 +37,19 @@ public class Item {
 	@Column(name = "author", nullable = false)
 	private String author;
 	
-
 	@ManyToMany(mappedBy = "items", cascade = CascadeType.REMOVE)
 	private Set<Borrow> borrow = new HashSet<Borrow>();
 	
+	public Item() {}
+	
 	public Item(Long id, String title, int quantity, LocalDate releaseDate, String author) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.quantity = quantity;
 		this.releaseDate = releaseDate;
 		this.author = author;
 	}
+	
 	public Long getId() {
 		return id;
 	}

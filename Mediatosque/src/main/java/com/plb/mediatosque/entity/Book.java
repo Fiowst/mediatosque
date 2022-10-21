@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 @Entity
 public class Book extends Item{
 	private String ISBN;
+	
+	public Book() {}
 
 	public Book(Long id, String title, int quantity, LocalDate releaseDate, String author, String ISBN) {
 		super(id, title, quantity, releaseDate, author);

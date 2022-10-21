@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +17,6 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "userSequenceGenerator")
-
 	private Long id;
 	
 	@Column(name = "login", nullable = false)
@@ -36,9 +34,10 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	private Set<Borrow> borrow = new HashSet <>();
+	
+	public User() {}
 
 	public User(Long id, String login, String password, String lastName, String firstName) {
-		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;

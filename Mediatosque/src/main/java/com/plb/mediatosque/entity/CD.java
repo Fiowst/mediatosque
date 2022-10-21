@@ -9,13 +9,13 @@ public class CD extends Item{
 	private Double duration;
 	private int nbTitle;
 	
+	public CD() {}
 	
 	public CD(Long id, String title, int quantity, LocalDate releaseDate, String author, Double duration, int nbTitle) {
 		super(id, title, quantity, releaseDate, author);
 		this.duration = duration;
 		this.nbTitle = nbTitle;
 	}
-
 
 	public Double getDuration() {
 		return duration;
