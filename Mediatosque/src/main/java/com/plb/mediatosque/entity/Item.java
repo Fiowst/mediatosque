@@ -17,13 +17,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "item")
 public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@SequenceGenerator(name = "itemSequenceGenerator", allocationSize = 1)
+
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
@@ -38,7 +39,8 @@ public class Item {
 	@Column(name = "author", nullable = false)
 	private String author;
 	
-	@ManyToMany(mappedBy="items", cascade=CascadeType.REMOVE)
+
+	@ManyToMany(mappedBy = "items", cascade = CascadeType.REMOVE)
 	private Set<Borrow> borrow = new HashSet<Borrow>();
 	
 	public Item(Long id, String title, int quantity, LocalDate releaseDate, String author) {
@@ -79,6 +81,5 @@ public class Item {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
-	
+
 }

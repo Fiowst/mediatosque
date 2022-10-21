@@ -41,3 +41,4 @@ public class Borrow {
 	@JoinColumn(name="item_id")
     private Set<Item> items = new HashSet<>();
 }
+

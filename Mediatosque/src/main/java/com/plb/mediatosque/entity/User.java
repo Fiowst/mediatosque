@@ -18,7 +18,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "userSequenceGenerator")
-    //@SequenceGenerator(name = "userSequenceGenerator", allocationSize = 1)
+
 	private Long id;
 	
 	@Column(name = "login", nullable = false)
@@ -33,7 +33,8 @@ public class User {
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
-	@OneToMany(mappedBy ="user")
+
+	@OneToMany(mappedBy = "user")
 	private Set<Borrow> borrow = new HashSet <>();
 
 	public User(Long id, String login, String password, String lastName, String firstName) {

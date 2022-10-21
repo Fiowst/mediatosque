@@ -27,7 +27,7 @@ public class DVD extends Item{
 		this.duration = duration;
 	}
 
-	public DVDType isType() {
+	public DVDType getType() {
 		return type;
 	}
 
