@@ -12,7 +12,7 @@ public class BorrowService {
 	
 	private BorrowRepository borrowRepository;
 
-	public List<Borrow> getByUserId(long userId){
+	public List<Borrow> getByUserId(Long userId){
 		return borrowRepository.findAllByUser_Id(userId);
 	}
 }

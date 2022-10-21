@@ -9,5 +9,5 @@ import com.plb.mediatosque.entity.Borrow;
 public interface BorrowRepository extends JpaRepository<Borrow, Long>  {
 	
 	// Retrouver les emprunts d'un user
-	List<Borrow> findAllByUser_Id(long id);
+	List<Borrow> findAllByUser_Id(Long id);
 }

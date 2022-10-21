@@ -36,7 +36,7 @@ public class BorrowController {
 	}
 	
 	@GetMapping("/borrow/user/{id}")
-    public ResponseEntity<List<Borrow>> getByUser(@PathVariable long id){
+    public ResponseEntity<List<Borrow>> getByUser(@PathVariable Long id){
 		List<Borrow> borrowByUserId = borrowService.getByUserId(id);
 		if (borrowByUserId.isEmpty()) {
           return ResponseEntity.notFound().build();
