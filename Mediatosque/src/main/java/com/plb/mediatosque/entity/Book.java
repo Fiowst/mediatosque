@@ -2,7 +2,10 @@ package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
 
-public class Book extends Truc{
+import javax.persistence.Entity;
+
+@Entity
+public class Book extends Item{
 	private String ISBN;
 
 	public Book(Long id, String title, int quantity, LocalDate releaseDate, String author, String ISBN) {

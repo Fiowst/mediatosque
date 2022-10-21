@@ -2,11 +2,18 @@ package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
 
-public class DVD extends Truc{
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+public class DVD extends Item{
 	private Double duration;
-	private boolean type; //true = blueray, false = normal
 	
-	public DVD(Long id, String title, int quantity, LocalDate releaseDate, String author, Double duration, boolean type) {
+	@Enumerated(EnumType.STRING)
+	private DVDType type;
+	
+	public DVD(Long id, String title, int quantity, LocalDate releaseDate, String author, Double duration, DVDType type) {
 		super(id, title, quantity, releaseDate, author);
 		this.duration = duration;
 		this.type = type;
@@ -20,13 +27,12 @@ public class DVD extends Truc{
 		this.duration = duration;
 	}
 
-	public boolean isType() {
+	public DVDType isType() {
 		return type;
 	}
 
-	public void setType(boolean type) {
+	public void setType(DVDType type) {
 		this.type = type;
 	}
-	
 	
 }

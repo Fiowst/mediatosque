@@ -1,14 +1,40 @@
 package com.plb.mediatosque.entity;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "userSequenceGenerator")
+    //@SequenceGenerator(name = "userSequenceGenerator", allocationSize = 1)
 	private Long id;
+	
+	@Column(name = "login", nullable = false)
 	private String login;
+	
+	@Column(name = "password", nullable = false)
 	private String password;
+	
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
+	
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
-	private ArrayList<Truc> borrows = new ArrayList<>();
+	
+	@OneToMany(mappedBy ="user")
+	private Set<Borrow> borrow = new HashSet <>();
 
 	public User(Long id, String login, String password, String lastName, String firstName) {
 		super();
@@ -17,7 +43,6 @@ public class User {
 		this.password = password;
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.borrows = null;
 	}
 	
 	//emprunter un truc
@@ -67,15 +92,4 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
-	public ArrayList<Truc> getBorrows() {
-		return borrows;
-	}
-
-	public void setBorrows(ArrayList<Truc> borrows) {
-		this.borrows = borrows;
-	}
-	
-
-	
 }

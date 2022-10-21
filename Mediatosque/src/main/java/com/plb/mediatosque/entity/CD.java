@@ -2,7 +2,10 @@ package com.plb.mediatosque.entity;
 
 import java.time.LocalDate;
 
-public class CD extends Truc{
+import javax.persistence.Entity;
+
+@Entity
+public class CD extends Item{
 	private Double duration;
 	private int nbTitle;
 	
