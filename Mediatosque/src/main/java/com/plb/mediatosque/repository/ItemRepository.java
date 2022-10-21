@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.plb.mediatosque.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
+	
 
 }
