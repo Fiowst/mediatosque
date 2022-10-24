@@ -7,9 +7,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +32,7 @@ public class BorrowController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(borrowService.borrowItem(user_id, items));
 	}
 	
-	@DeleteMapping("/user/{user_id}/borrow/delete/{borrow_id}")
+	@PutMapping("/user/{user_id}/return/{borrow_id}")
 	public ResponseEntity<Void> returnItem(@PathVariable Long user_id, @PathVariable Long borrow_id) {
 		borrowService.returnItem(user_id, borrow_id);
 		return ResponseEntity.ok().build();

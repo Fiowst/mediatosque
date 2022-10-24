@@ -40,7 +40,9 @@ public class BorrowService {
 		
 		int nbrOfBorrowedItems = 0;
 		for(Borrow userBorrow : userBorrows) {
-			nbrOfBorrowedItems += userBorrow.getItems().size();
+			if(userBorrow.getReturnDate() == null) {
+				nbrOfBorrowedItems += userBorrow.getItems().size();
+			}
 		}
 		
 		// si l'utilisateur a déjà 3 emprunts, on renvoie l'exception
@@ -75,20 +77,18 @@ public class BorrowService {
 		return addThisBorrow;
 	}
 	
-	public Item returnItem(Long borrow_id) {
+	public void returnItem(Long user_id, Long borrow_id) {
 		// récupérer l'emprunt lié à l'id
 		Borrow getBorrow = borrowRepository.findById(borrow_id).orElseThrow(() -> new EntityNotFoundException());
 		
-		// incrémenter l'item retourné
+		// incrémenter les items retournés
 		Set<Item> getItemFromBorrow = getBorrow.getItems();
-		Item selectedItemToReturn = getItemFromBorrow.stream().findFirst().orElseThrow(() -> new EntityNotFoundException());
-		selectedItemToReturn.setQuantity(selectedItemToReturn.getQuantity() + 1);
-		itemRepository.save(selectedItemToReturn);
-		
-		// supprimer l'emprunt
-		borrowRepository.deleteById(borrow_id);
-		
-		return selectedItemToReturn;
+		for(Item selectedItemToReturn : getItemFromBorrow) {
+			selectedItemToReturn.setQuantity(selectedItemToReturn.getQuantity() + 1);
+			itemRepository.save(selectedItemToReturn);
+		}
+		getBorrow.setReturnDate(LocalDate.now());
+		borrowRepository.save(getBorrow);
 	}
 	
 }

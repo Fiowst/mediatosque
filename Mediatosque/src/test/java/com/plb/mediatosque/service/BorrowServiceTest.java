@@ -2,29 +2,32 @@ package com.plb.mediatosque.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.plb.mediatosque.MediatosqueApplication;
+import com.plb.mediatosque.entity.Borrow;
 import com.plb.mediatosque.entity.Item;
 import com.plb.mediatosque.entity.User;
 import com.plb.mediatosque.exception.QuotasExceedException;
 import com.plb.mediatosque.exception.UnavailableItemException;
 import com.plb.mediatosque.repository.BorrowRepository;
-import com.plb.mediatosque.repository.ItemRepository;
 
 @SpringBootTest(classes = MediatosqueApplication.class)
+@Transactional
 public class BorrowServiceTest {
 	
 	@Autowired
+    BorrowRepository borrowRepository;
+	
+	@Autowired
     BorrowService borrowService;
-	
-	@Autowired
-	BorrowRepository borrowRepository;
-	
-	@Autowired
-	ItemRepository itemRepository;
 
 	@Test
 	void testBorrowItem() throws QuotasExceedException, UnavailableItemException {
@@ -32,21 +35,41 @@ public class BorrowServiceTest {
 		User newUser = new User();
         newUser.setId(1L);
         
+        
+        // récupérer la liste des emprunts de cet utilisateur
+        List<Borrow> newUserBorrowsBefore = borrowRepository.findByUser_Id(newUser.getId());
         // enregistrer le nombre de document emprunté pour cet utilisateur avant le test
-        int nbrOfItemBorrowedByUserBefore = borrowRepository.findByUser_Id(newUser.getId()).size();
+        int nbrOfItemBorrowedByUserBefore = 0;
+        for(Borrow newUserBorrow : newUserBorrowsBefore) {
+        	if(newUserBorrow.getReturnDate() == null) {
+        		nbrOfItemBorrowedByUserBefore += newUserBorrow.getItems().size();
+			}
+        }
 
         // créer un document pour le test
-        Item newItem = new Item();
-        newItem.setId(1L);
+        List<Item> newItems = new ArrayList<>();
+        Item item1 = new Item();
+        item1.setId(1L);
+        Item item2 = new Item();
+        item2.setId(2L);
+        newItems.add(item1);
+        newItems.add(item2);
 
         // exécution du test
-        borrowService.borrowItem(newItem.getId(), newUser);
+        borrowService.borrowItem(newUser.getId(), newItems);
         
+        // récupérer la liste des emprunts de cet utilisateur
+        List<Borrow> newUserBorrowsAfter = borrowRepository.findByUser_Id(newUser.getId());
         // enregistrer le nombre de document emprunté pour cet utilisateur après le test
-        int nbrOfItemBorrowedByUserAfter = borrowRepository.findByUser_Id(newUser.getId()).size();
+        int nbrOfItemBorrowedByUserAfter = 0;
+        for(Borrow newUserBorrow : newUserBorrowsAfter) {
+        	if(newUserBorrow.getReturnDate() == null) {
+        		nbrOfItemBorrowedByUserAfter += newUserBorrow.getItems().size();
+			}
+        }
         
         // vérifier qu'il y a bien un emprunt de plus pour cet utilisateur
-        assertEquals(nbrOfItemBorrowedByUserBefore + 1,nbrOfItemBorrowedByUserAfter);
+        assertEquals(nbrOfItemBorrowedByUserBefore + 2,nbrOfItemBorrowedByUserAfter);
 	}
 
 }
