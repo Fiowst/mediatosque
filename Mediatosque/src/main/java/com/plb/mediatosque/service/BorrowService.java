@@ -2,9 +2,11 @@ package com.plb.mediatosque.service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import com.plb.mediatosque.repository.ItemRepository;
 import com.plb.mediatosque.repository.UserRepository;
 
 @Service
+@Transactional
 public class BorrowService {
 	
 	@Autowired
@@ -30,10 +33,15 @@ public class BorrowService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public Borrow borrowItem(Long item_id, User user) throws QuotasExceedException, UnavailableItemException {
+	public Borrow borrowItem(Long user_id, List<Item> items) throws QuotasExceedException, UnavailableItemException {
 		// vérifier que l'utilisateur n'a pas dépassé le nombre d'emprunt (max 3)
-		// on récupère les emprunts de l'utilisateur
-		int nbrOfBorrowedItems = borrowRepository.findByUser_Id(user.getId()).size();
+		// récupérer les emprunts de l'utilisateur
+		List<Borrow> userBorrows = borrowRepository.findByUser_Id(user_id);
+		
+		int nbrOfBorrowedItems = 0;
+		for(Borrow userBorrow : userBorrows) {
+			nbrOfBorrowedItems += userBorrow.getItems().size();
+		}
 		
 		// si l'utilisateur a déjà 3 emprunts, on renvoie l'exception
 		if(nbrOfBorrowedItems > 2) {
@@ -43,19 +51,24 @@ public class BorrowService {
 		Set<Item> itemToAdd = new HashSet<>();
 		
 		// vérifier qu'il reste des copies des items
-		Item selectedItemToBorrow = itemRepository.findById(item_id).orElseThrow(() -> new EntityNotFoundException());
-		if(selectedItemToBorrow.getQuantity() < 1) {
-			throw new UnavailableItemException("Le document " + selectedItemToBorrow.getTitle() + " n'est pas disponible actuellement.");
-		} else {				
-			// s'il reste une copie, on décrémente l'item
-			selectedItemToBorrow.setQuantity(selectedItemToBorrow.getQuantity() - 1);
-			itemToAdd.add(selectedItemToBorrow);
+		for(Item item : items) {
+			Item selectedItemToBorrow = itemRepository.findById(item.getId()).orElseThrow(() -> new EntityNotFoundException());
+			if(selectedItemToBorrow.getQuantity() < 1) {
+				throw new UnavailableItemException("Le document " + selectedItemToBorrow.getTitle() + " n'est pas disponible actuellement.");
+			} else {				
+				// s'il reste une copie, on décrémente l'item
+				selectedItemToBorrow.setQuantity(selectedItemToBorrow.getQuantity() - 1);
+				itemToAdd.add(selectedItemToBorrow);
+				itemRepository.save(selectedItemToBorrow);
+			}
 		}
+		
+		// récupérer l'utilisateur à l'origine de l'emprunt
+		User user = userRepository.findById(user_id).orElseThrow(() -> new EntityNotFoundException());
 		
 		// ajouter l'emprunt
 		Borrow addThisBorrow = new Borrow();
 		addThisBorrow.setBorrowDate(LocalDate.now());
-		addThisBorrow.setReturnDate(LocalDate.now().plusDays(7));
 		addThisBorrow.setUser(user);
 		addThisBorrow.setItems(itemToAdd);
 		borrowRepository.save(addThisBorrow);
