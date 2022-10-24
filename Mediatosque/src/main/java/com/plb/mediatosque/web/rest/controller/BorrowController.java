@@ -18,7 +18,6 @@ import com.plb.mediatosque.entity.Borrow;
 import com.plb.mediatosque.entity.User;
 import com.plb.mediatosque.exception.QuotasExceedException;
 import com.plb.mediatosque.exception.UnavailableItemException;
-import com.plb.mediatosque.repository.BorrowRepository;
 import com.plb.mediatosque.service.BorrowService;
 
 @RestController
@@ -28,21 +27,18 @@ public class BorrowController {
 	@Autowired
 	BorrowService borrowService;
 	
-	@Autowired
-	BorrowRepository borrowRepository;
-	
 	@PostMapping("/borrow/{item_id}")
 	public ResponseEntity<Borrow> borrowItem(@Valid @PathVariable Long item_id, @RequestBody User user) throws QuotasExceedException, UnavailableItemException {
 		return ResponseEntity.ok(borrowService.borrowItem(item_id, user));
 	}
 	
 	@DeleteMapping("/delete/borrow/{borrow_id}")
-	public ResponseEntity<Void> returnItem(@PathVariable Long id) {
+	public ResponseEntity<Void> returnItem(@PathVariable Long borrow_id) {
 		try {
-			borrowRepository.deleteById(id);
+			borrowService.returnItem(borrow_id);
 			return ResponseEntity.ok().build();
         } catch (EmptyResultDataAccessException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found with id : " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found with id : " + borrow_id);
         }
 	}
 }
