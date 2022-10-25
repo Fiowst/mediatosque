@@ -2,6 +2,7 @@ package com.plb.mediatosque.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class BorrowServiceTest {
         newItems.add(item2);
 
         // exécution du test
-        borrowService.borrowItem(newUser.getId(), newItems);
+        borrowService.borrowItems(newUser.getId(), newItems);
         
         // récupérer la liste des emprunts de cet utilisateur
         List<Borrow> newUserBorrowsAfter = borrowRepository.findByUser_Id(newUser.getId());
@@ -70,6 +71,34 @@ public class BorrowServiceTest {
         
         // vérifier qu'il y a bien un emprunt de plus pour cet utilisateur
         assertEquals(nbrOfItemBorrowedByUserBefore + 2,nbrOfItemBorrowedByUserAfter);
+	}
+	
+	@Test
+	void testUpdateBorrow() throws QuotasExceedException, UnavailableItemException {
+		// créer un utilisateur pour le test
+		User newUser = new User();
+        newUser.setId(1L);
+
+        // créer un document pour le test
+        List<Item> newItems = new ArrayList<>();
+        Item item1 = new Item();
+        item1.setId(1L);
+        Item item2 = new Item();
+        item2.setId(2L);
+        newItems.add(item1);
+        newItems.add(item2);
+
+        // réaliser un emprunt
+        Borrow newBorrow = borrowService.borrowItems(newUser.getId(), newItems);
+        
+        // exécution du test
+        borrowService.returnBorrow(newUser.getId(), newBorrow.getId());
+        
+        Borrow borrowAfterUpdate = borrowRepository.findById(newBorrow.getId()).get();
+        LocalDate returnDate = borrowAfterUpdate.getReturnDate();
+        
+        // vérifier qu'il y a bien une date de retour pour l'emprunt test de cet utilisateur
+        assertTrue(returnDate != null);
 	}
 
 }
