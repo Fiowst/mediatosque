@@ -33,7 +33,7 @@ public class BorrowService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public Borrow borrowItem(Long user_id, List<Item> items) throws QuotasExceedException, UnavailableItemException {
+	public Borrow borrowItems(Long user_id, List<Item> items) throws QuotasExceedException, UnavailableItemException {
 		// vérifier que l'utilisateur n'a pas dépassé le nombre d'emprunt (max 3)
 		// récupérer les emprunts de l'utilisateur
 		List<Borrow> userBorrows = borrowRepository.findByUser_Id(user_id);
@@ -77,7 +77,7 @@ public class BorrowService {
 		return addThisBorrow;
 	}
 	
-	public void returnItem(Long user_id, Long borrow_id) {
+	public void returnBorrow(Long user_id, Long borrow_id) {
 		// récupérer l'emprunt lié à l'id
 		Borrow getBorrow = borrowRepository.findById(borrow_id).orElseThrow(() -> new EntityNotFoundException());
 		

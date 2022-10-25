@@ -7,4 +7,6 @@ import com.plb.mediatosque.entity.User;
 
 public interface UserRepository extends JpaRepository <User, Long> {
 
+	
+	
 }

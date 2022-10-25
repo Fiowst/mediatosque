@@ -1,5 +1,6 @@
 package com.plb.mediatosque.service;
 
+// import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,10 @@ import com.plb.mediatosque.repository.ItemRepository;
 
 @Service
 public class ItemService {
-	
+
 	@Autowired
 	ItemRepository itemRepository;
-	
+
 	public List<Item> findItemByCategory(String category) {
 		List<Item> items;
 		switch (category) {

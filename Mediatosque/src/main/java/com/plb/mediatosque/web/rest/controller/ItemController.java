@@ -41,7 +41,7 @@ public class ItemController {
 		return ResponseEntity.ok(itemRepository.findNewItems(LocalDate.now().minusMonths(1)));
 	}
 	
-	@GetMapping("/category/{category}")
+	@GetMapping("/categories/{category}")
 	public ResponseEntity<List<Item>> findItemByCategory(String category) {
 		return ResponseEntity.ok(itemService.findItemByCategory(category.toLowerCase()));
 	}

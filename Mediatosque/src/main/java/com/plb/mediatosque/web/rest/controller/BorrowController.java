@@ -2,8 +2,6 @@ package com.plb.mediatosque.web.rest.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +25,14 @@ public class BorrowController {
 	@Autowired
 	BorrowService borrowService;
 	
-	@PostMapping("/user/{user_id}/borrow/{item}")
-	public ResponseEntity<Borrow> borrowItem(@Valid @PathVariable Long user_id, @RequestBody List<Item> items) throws QuotasExceedException, UnavailableItemException {
-		return ResponseEntity.status(HttpStatus.CREATED).body(borrowService.borrowItem(user_id, items));
+	@PostMapping("/users/{user_id}/borrows/")
+	public ResponseEntity<Borrow> borrowItems(@PathVariable Long user_id, @RequestBody List<Item> items) throws QuotasExceedException, UnavailableItemException {
+		return ResponseEntity.status(HttpStatus.CREATED).body(borrowService.borrowItems(user_id, items));
 	}
 	
-	@PutMapping("/user/{user_id}/return/{borrow_id}")
-	public ResponseEntity<Void> returnItem(@PathVariable Long user_id, @PathVariable Long borrow_id) {
-		borrowService.returnItem(user_id, borrow_id);
+	@PutMapping("/users/{user_id}/borrows/{borrow_id}")
+	public ResponseEntity<Void> returnBorrow(@PathVariable Long user_id, @PathVariable Long borrow_id) {
+		borrowService.returnBorrow(user_id, borrow_id);
 		return ResponseEntity.ok().build();
 	}
 }
