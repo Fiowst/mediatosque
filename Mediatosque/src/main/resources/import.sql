@@ -1,6 +1,6 @@
-INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('Fionna', 'Westbury','fwestbury@gmail.com','frites');
-INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('Clémentine', 'Bouillaud','cbouillaud@gmail.com','gauffre');
-INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('David', 'Thibau','dthibau@gmail.com','tortilla');
+INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('Fionna', 'Westbury','fwestbury@gmail.com','$2b$05$B6NP/xspwKVFh/ij8O.e8eyjPD0nPvJqZ3LvssJi2anbv.EJc21xC');
+INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('Clémentine', 'Bouillaud','cbouillaud@gmail.com','$2b$05$LxbrkEhVdtLp5mvcyw9Ieug5wQo6MXtulEa1tgD6NxK4OrxtbESU6');
+INSERT INTO USERS (FIRST_NAME, LAST_NAME, LOGIN, PASSWORD) VALUES ('David', 'Thibau','dthibau@gmail.com','$2b$05$zbwPFujYu8xCqhikRKR6Fe9Kv5tJnMC1DjCWe687ZLDYu1lUvq03e');
 
 INSERT INTO ITEM (AUTHOR, QUANTITY, RELEASE_DATE, TITLE) VALUES ('Fionna', 3,'2022-10-07','le gras cest la vie');
 INSERT INTO ITEM (AUTHOR, QUANTITY, RELEASE_DATE, TITLE) VALUES ('Clémentine', 1,'2022-10-07','vive les gauffres');
