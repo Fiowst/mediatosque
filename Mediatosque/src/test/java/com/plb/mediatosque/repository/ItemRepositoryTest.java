@@ -45,7 +45,7 @@ public class ItemRepositoryTest {
 	@Test
     public void shouldFindAllBooks() {
         List<Item> books = itemRepository.findAllBooks();
-        assertEquals("cours de java avancé", books.get(0).getTitle());
+        assertEquals("cours de java", books.get(0).getTitle());
     }
 	
 }
