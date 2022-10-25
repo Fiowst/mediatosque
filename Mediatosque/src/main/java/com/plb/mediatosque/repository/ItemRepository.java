@@ -11,6 +11,8 @@ import com.plb.mediatosque.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 	
+	// DAVID
+	
 	// Retrouver les items disponibles
     @Query("SELECT i FROM Item i WHERE i.quantity > 0")
     List<Item> findAvailableItems();
